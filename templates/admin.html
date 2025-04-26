@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .user-list-item {
+            display: flex;
+            justify-content: space-between; /* Ensures username is on the left and delete button is on the right */
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2>🛠️ Admin Panel</h2>
+        <a href="/" class="btn btn-secondary mb-4">Back to Dashboard</a>
+
+
+        <!-- Add New User Section -->
+        <div class="card p-4 mb-4">
+            <h4>Add New User</h4>
+            <form action="/admin/add_user" method="post" class="d-flex gap-2">
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <button type="submit" class="btn btn-success">Add</button>
+            </form>
+        </div>
+
+
+        <!-- User List Section -->
+        <div class="card p-4">
+            <h4>User List</h4>
+            <ul class="list-group">
+                {% for user in users %}
+                    <li class="list-group-item user-list-item">
+                        <!-- Left side: Username -->
+                        <div>{{ user['username'] }}</div>
+
+
+                        <!-- Right side: Delete Button -->
+                        <div>
+                            <form action="/admin/delete_user/{{ user['id'] }}" method="post" onsubmit="return confirm('Are you sure?');">
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
